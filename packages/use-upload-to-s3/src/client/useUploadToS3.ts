@@ -38,7 +38,7 @@ export function useUploadToS3(
   options: {
     accept?: string;
     sizeLimit?: string;
-    onUploadComplete?: (s3key: string) => void;
+    onUploadComplete?: (s3key: string, file: File) => void;
   } = {}
 ): [
   (event: React.ChangeEvent<HTMLInputElement>) => void,
@@ -58,14 +58,14 @@ export function useUploadToS3(
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // if (file.type === 'image/svg+xml') {
-    //   setError(
-    //     new Error(
-    //       'SVG files are not allowed for sécurity reasons. See https://www.fortinet.com/blog/threat-research/scalable-vector-graphics-attack-surface-anatomy'
-    //     )
-    //   );
-    //   return;
-    // }
+    if (file.type === 'image/svg+xml') {
+      setError(
+        new Error(
+          'SVG files are not allowed for sécurity reasons. See https://www.fortinet.com/blog/threat-research/scalable-vector-graphics-attack-surface-anatomy'
+        )
+      );
+      return;
+    }
 
     const acceptedFiletypes = accept.split(',');
     for (let i = 0; i < acceptedFiletypes.length; i++) {
@@ -137,7 +137,7 @@ export function useUploadToS3(
         await removeTmpCors(bucket);
         setS3key(key);
         if (options.onUploadComplete) {
-          options.onUploadComplete(key);
+          options.onUploadComplete(key, file);
         }
       } catch (error) {
         console.error(error);

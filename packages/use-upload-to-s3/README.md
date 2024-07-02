@@ -116,7 +116,7 @@ The maximum file size in bytes, defaults to 1MB.
 > To change that you have to set it in the next.config.js (or next.config.mjs) file.  
 > see <https://nextjs.org/docs/app/api-reference/next-config-js/serverActions#bodysizelimit>
 
-#### `onUploadComplete: (s3key: string) => void`
+#### `onUploadComplete: (s3key: string, file: File) => void`
 
 A callback function to be executed when the upload completes.
 
