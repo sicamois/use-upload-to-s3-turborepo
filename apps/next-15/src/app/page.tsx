@@ -7,8 +7,8 @@ export default function Home() {
     {
       accept: 'image/*',
       sizeLimit: '5MB',
-      onUploadComplete: (s3key) =>
-        console.log(`Upload complete - s3key: ${s3key}`),
+      onUploadComplete: (s3key, file) =>
+        console.log(`Upload complete - s3key: ${s3key} - file: ${file.name}`),
     }
   );
   return (
