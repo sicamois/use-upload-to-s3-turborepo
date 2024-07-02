@@ -18,6 +18,10 @@
     "LICENSE",
     "README.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sicamois/use-upload-to-s3-turborepo"
+  },
   "scripts": {
     "lint": "eslint --report-unused-disable-directives --max-warnings 0 .",
     "prepublishOnly": "tsc && vite build"
