@@ -1,0 +1,56 @@
+{
+  "name": "use-upload-to-s3",
+  "private": false,
+  "version": "0.1.4",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/mod.js",
+  "types": "./dist/mod.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/mod.d.ts",
+      "default": "./dist/mod.js"
+    }
+  },
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "lint": "eslint --report-unused-disable-directives --max-warnings 0 .",
+    "prepublishOnly": "tsc && vite build"
+  },
+  "peerDependencies": {
+    "@aws-sdk/client-s3": "^3",
+    "@aws-sdk/s3-request-presigner": "^3",
+    "react": "^18 | ^19",
+    "react-dom": "^18 | ^19"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.608.0",
+    "@aws-sdk/s3-request-presigner": "^3.608.0",
+    "bytes": "^3.1.2",
+    "nanoid": "^5.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/bytes": "^3.1.4",
+    "@types/node": "^20",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "glob": "^10.4.2",
+    "rollup-preserve-directives": "^1.1.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.9.1"
+  }
+}

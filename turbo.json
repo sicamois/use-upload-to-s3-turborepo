@@ -1,13 +1,18 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
+    "prepublishOnly": {
+      "outputs": ["dist/**"],
+      "cache": false
+    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^prepublishOnly"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "lint": {},
     "dev": {
+      "dependsOn": ["^prepublishOnly"],
       "cache": false,
       "persistent": true
     }

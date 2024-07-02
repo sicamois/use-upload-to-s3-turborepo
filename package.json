@@ -12,5 +12,9 @@
     "turbo": "^2.0.6"
   },
   "packageManager": "pnpm@8.15.6",
-  "name": "with-vite"
+  "name": "with-vite",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.608.0",
+    "@aws-sdk/s3-request-presigner": "^3.608.0"
+  }
 }
