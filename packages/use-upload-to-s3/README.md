@@ -43,7 +43,7 @@ pnpm add use-upload-to-s3
 
 - Create a `.env.local` file in the root of your project, with the following environment variables:
 
-```env
+```Dotenv
 AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
 AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 AWS_REGION=<YOUR_REGION>
@@ -51,7 +51,7 @@ AWS_REGION=<YOUR_REGION>
 
 ### Quickstart
 
-```jsx
+```tsx
 'use client';
 
 import { useUploadToS3 } from 'use-upload-to-s3';
@@ -128,7 +128,7 @@ A callback function to be executed when the upload completes.
 
 ### Example with `options`
 
-```jsx
+```tsx
 'use client';
 ...
 import { useUploadToS3 } from 'use-upload-to-s3';

@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import {
   DeleteBucketCorsCommand,
@@ -7,9 +7,9 @@ import {
   PutObjectCommand,
   S3Client,
   type CORSRule,
-} from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { nanoid } from 'nanoid';
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { customAlphabet } from "nanoid";
 
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID!;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY!;
@@ -24,8 +24,13 @@ const s3Client = new S3Client({
 });
 
 const generateUniqueFileName = (originalName: string): string => {
-  const nameWithoutExtension = originalName.replace(/\.[^/.]+$/, '');
-  const extension = originalName.split('.').pop();
+  // Remove '-' from the alphabet to avoid confusion with the separator
+  const alphabet =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+  const nanoid = customAlphabet(alphabet, 21);
+
+  const nameWithoutExtension = originalName.replace(/\.[^/.]+$/, "");
+  const extension = originalName.split(".").pop();
   return `${nanoid()}-${nameWithoutExtension}.${extension}`;
 };
 
@@ -50,22 +55,22 @@ async function getCurrentCORSRules(bucketName: string): Promise<CORSRule[]> {
 export async function getPutToS3PresignedUrlFromServer(
   file: File,
   bucketName: string,
-  origin: string
+  origin: string,
 ) {
-  if (file.type === 'image/svg+xml') {
+  if (file.type === "image/svg+xml") {
     throw new Error(
-      'SVG files are not allowed for security reasons. See https://www.fortinet.com/blog/threat-research/scalable-vector-graphics-attack-surface-anatomy'
+      "SVG files are not allowed for security reasons. See https://www.fortinet.com/blog/threat-research/scalable-vector-graphics-attack-surface-anatomy",
     );
   }
 
   const currentCORSRules = await getCurrentCORSRules(bucketName);
 
-  const qualifiedOrigin = origin.split(':').shift()?.includes('localhost')
-    ? 'http://' + origin
-    : 'https://' + origin;
+  const qualifiedOrigin = origin.split(":").shift()?.includes("localhost")
+    ? "http://" + origin
+    : "https://" + origin;
   tmpCORSRule = {
-    AllowedHeaders: ['*'],
-    AllowedMethods: ['PUT'],
+    AllowedHeaders: ["*"],
+    AllowedMethods: ["PUT"],
     AllowedOrigins: [qualifiedOrigin],
     ExposeHeaders: [],
     MaxAgeSeconds: 3000,
@@ -83,7 +88,7 @@ export async function getPutToS3PresignedUrlFromServer(
   key = generateUniqueFileName(file.name);
 
   const unknownFileType =
-    file.type === 'application/octet-stream' || file.type === '';
+    file.type === "application/octet-stream" || file.type === "";
 
   const putCommand = new PutObjectCommand({
     Bucket: bucketName,
@@ -98,9 +103,9 @@ export async function getPutToS3PresignedUrlFromServer(
     removeTmpCors(bucketName);
   }, 10000);
 
-  const signableHeaders = new Set(['content-length']);
+  const signableHeaders = new Set(["content-length"]);
   if (!unknownFileType) {
-    signableHeaders.add('content-type');
+    signableHeaders.add("content-type");
   }
   return await getSignedUrl(s3Client, putCommand, {
     signableHeaders,

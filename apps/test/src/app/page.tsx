@@ -12,7 +12,7 @@ export default function Home() {
     }
   );
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
+    <main className='flex flex-col items-center justify-between p-24'>
       <input type='file' onChange={handleInputChange} />
       {s3key && <p>S3 key: {s3key}</p>}
       {isPending && <p>Upload in progress...</p>}
